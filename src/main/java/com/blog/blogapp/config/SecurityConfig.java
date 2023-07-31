@@ -40,9 +40,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/swagger-ui/index.html").permitAll()
-
-//                        .requestMatchers("/swagger-resources/", "/webjars/")
-//                        .requestMatchers(HttpMethod.OPTIONS, "/**")
                         .anyRequest().authenticated()
                 ).exceptionHandling(error -> error.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -60,20 +57,7 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    ///IN MEMORY AUTHENTICATION
-   /* @Bean public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
-        UserDetails user =  User.builder()
-                                .username("Kshitij")
-                                .password(passwordEncoder().encode("123"))
-                                .roles("ADMIN")
-                                .build();
-        UserDetails user2 =  User.builder()
-                .username("Scout")
-                .password(passwordEncoder().encode("user123"))
-                .roles("USER")
-                .build();
-    return new InMemoryUserDetailsManager(user,user2);
-    }*/
+   
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
